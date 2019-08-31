@@ -1,5 +1,6 @@
 package com.linqxxy.tools;
 
+import com.linqxxy.exeception.SystemExecption;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -7,11 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 public class DBUtil {
-    private static final String URL = "jdbc:mysql://localhost:3306/blogdemo";
+    private static final String URL = "jdbc:mysql://LOCALHOST:3306/blogdemo?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
     private static final String USER_NAME = "root";
     private static final String PASSWORD = "123456";
     private volatile static DataSource DATASOURCE;
-    public static DataSource getDATASOURCE() {
+    private static DataSource getDATASOURCE() {
         if (DATASOURCE == null) {
             synchronized (DBUtil.class) {
                 if (DATASOURCE == null) {
@@ -46,6 +47,7 @@ public class DBUtil {
             }
         }catch (SQLException ex){
             ex.printStackTrace();
+            throw  new SystemExecption("数据库错误");
         }
     }
 }
